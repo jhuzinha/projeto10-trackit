@@ -10,12 +10,10 @@ export default function Router() {
         <BrowserRouter>
             <Routes>
                 <Route path="/cadastro" element={<Register />} />
-
                 <Route path="/" element={<Login />} />
                 <Route path="/habitos" element={<Habits />} />
                 <Route path="/hoje" element={<Today />} />
                 <Route path="/historico" element={<History />} />
-
             </Routes>
         </BrowserRouter>
     )
