@@ -1,3 +1,6 @@
+import { createGlobalStyle } from 'styled-components';
+
+export const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -46,3 +49,14 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lexend Deca', sans-serif;
+    background-color: ${({login}) => login? "#FFFFFF" : "#F2F2F2"};
+}
+
+`

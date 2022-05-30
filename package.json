@@ -5,6 +5,7 @@
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
     "axios": "^0.27.2",
+    "dayjs": "^1.11.2",
     "react": "^17.0.2",
     "react-circular-progressbar": "^2.0.4",
     "react-confirm-alert": "^3.0.2",

@@ -8,6 +8,7 @@ import logo from "../Assets/images/Logo.png"
 import UserImage from "./contexts/Image";
 import { ThreeDots } from  'react-loader-spinner';
 
+
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -34,7 +35,7 @@ export default function Login() {
             {
             setToken(res.data.token);
             setUserImage(res.data.image)
-            navigate("/habitos")
+            navigate("/hoje")
             }
         )
         promisse.catch(

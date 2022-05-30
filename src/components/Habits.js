@@ -6,6 +6,8 @@ import Token from "./contexts/Token";
 import Header from "./Header";
 import { BsTrash } from "@react-icons/all-files/bs/BsTrash";
 import Menu from "./Menu";
+import { ThreeDots } from  'react-loader-spinner';
+
 
 export default function Habits() {
     const [allHabits, setAllHabits] = useState([]);
@@ -13,6 +15,7 @@ export default function Habits() {
     const { token } = useContext(Token);
     const [nameHabit, setNameHabit] = useState("");
     const [selectedDay, setSelectedDay] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const config = {
@@ -21,8 +24,8 @@ export default function Habits() {
             }
         }
         const response = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
-        response.then((res) => { setAllHabits(res.data); console.log(res.data) })
-        response.catch((res) => console.log(res.response.data))
+        response.then((res) => { setAllHabits(res.data); setLoading(false) })
+        response.catch((res) => setLoading(false))
     }, [])
 
 
@@ -48,7 +51,11 @@ export default function Habits() {
                 </div>
                 <div>
                     {
-                        allHabits.length === 0 ?
+                        loading ? <ThreeDots color="#126BA5" height={80} width={80} /> : ''
+                    }
+
+                    {
+                        allHabits.length === 0 && !loading?
                             <WithoutHabits /> :
                             <ExistHabits allHabits={allHabits} token={token} setAllHabits={setAllHabits} />
                     }
@@ -62,8 +69,6 @@ export default function Habits() {
 
 function deleteHabit(habit, token, allHabits, setAllHabits) {
     const confirm = window.confirm("Voce tem certeza que deseja excluir este item?")
-    
-
     if(confirm) {
     const response = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}`, {
         data: { habit }, headers: {
@@ -86,11 +91,13 @@ function ExistHabits({ allHabits, token, setAllHabits }) {
 
                     <CardHabit key={habit.id}>
                         <li>
-                            {habit.name}
+                            <NameHabitCard>{habit.name}</NameHabitCard>
                             <BsTrash onClick={() =>  deleteHabit(habit, token, allHabits, setAllHabits)} />
                         </li>
                         <div>
-                            {days.map((day, index) => { return ((habit.days).includes(index) ? <DaySelect background={"#cfcfcf"} key={index}>{day}</DaySelect> : <DaySelect background={"#ffffff"} key={index}>{day}</DaySelect>) })}
+                            {days.map((day, index) => { return ((habit.days).includes(index) ? 
+                            <DaySelect background={"#cfcfcf"} cor={'#FFFFFF'} key={index}>{day}</DaySelect> : 
+                            <DaySelect cor={'#666666'} background={"#ffffff"}  key={index}>{day}</DaySelect>) })}
                         </div>
                     </CardHabit>
 
@@ -122,6 +129,7 @@ const CardHabit = styled.div`
         display: flex;
         justify-content: space-between;
         margin-bottom: 8px;
+        word-wrap: break-word;
     }
 `
 
@@ -130,7 +138,7 @@ const DaySelect = styled.button`
     background: ${(props) => props.background};
     border: 1px solid #D5D5D5;
     border-radius: 5px;
-    color: #666666;
+    color: ${(props) => props.cor};
     width: 30px;
     height: 30px;
 `
@@ -165,4 +173,10 @@ const MenuHabits = styled.div`
 
     }
 
+`
+
+const NameHabitCard = styled.div`
+    width: 90%;
+    word-wrap: break-word;
+    height: auto;
 `
