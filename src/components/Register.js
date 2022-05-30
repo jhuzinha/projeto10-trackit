@@ -30,12 +30,11 @@ export default function Register() {
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", newUser)
         request.then((res) =>
             {   
-                console.log(res.data)
                 navigate("/")
                 
             }
         )
-        request.catch((res)=> {alert(res.response.data.message);setLoading(false); setDisable(false); console.log(res.response.data)})
+        request.catch((res)=> {alert(res.response.data.message);setLoading(false); setDisable(false)})
     
     }
 

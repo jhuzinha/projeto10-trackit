@@ -8,6 +8,7 @@ import { BsTrash } from "@react-icons/all-files/bs/BsTrash";
 import Menu from "./Menu";
 import { ThreeDots } from  'react-loader-spinner';
 import { createGlobalStyle } from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export default function Habits() {
     const [allHabits, setAllHabits] = useState([]);
@@ -16,6 +17,7 @@ export default function Habits() {
     const [nameHabit, setNameHabit] = useState("");
     const [selectedDay, setSelectedDay] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const config = {
@@ -24,13 +26,14 @@ export default function Habits() {
             }
         }
         const response = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
-        response.then((res) => { setAllHabits(res.data); setLoading(false) })
-        response.catch((res) => setLoading(false))
+        response.then((res) => { setAllHabits(res.data); setLoading(false)})
+        response.catch((res) => { alert("Token Inválido"); setLoading(false); navigate("/")})
     }, [])
 
 
     return (
         <>
+            <GlobalStyle />
             <Header />
             <Container>
                 <MenuHabits>
@@ -77,7 +80,7 @@ function deleteHabit(habit, token, allHabits, setAllHabits) {
     })
     response.then(() => {const newHabits = allHabits.filter((all) => all.id !== habit.id); 
        setAllHabits(newHabits) })
-    response.catch((res) => console.log(res.response.data))}
+    response.catch((res) => alert(res.response.data.message))}
 
 }
 
@@ -89,7 +92,7 @@ function ExistHabits({ allHabits, token, setAllHabits }) {
             {allHabits.map((habit) => {
                 return (
                     <>
-                    <GlobalStyle />
+                    
                     <CardHabit key={habit.id}>
                         <li>
                             <NameHabitCard>{habit.name}</NameHabitCard>
@@ -136,7 +139,7 @@ const CardHabit = styled.div`
 
 const GlobalStyle = createGlobalStyle`
 body {
-    background-color:  #F2F2F2;
+    background-color: #F2F2F2;
 }
 `
 

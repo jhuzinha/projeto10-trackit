@@ -10,6 +10,7 @@ import { BsCheckLg } from "react-icons/bs";
 import { ThreeDots } from 'react-loader-spinner';
 import Progressbar from "./contexts/ProgressBar";
 import { createGlobalStyle } from "styled-components";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 export default function Today() {
@@ -19,16 +20,18 @@ export default function Today() {
     const { progress, setProgress } = useContext(Progressbar);
     const [habitsToday, setHabitsToday] = useState([]);
     const [disable, setDisable] = useState(false);
+    const navigate = useNavigate();
 
     attProgress(habitsToday,setProgress)
     useEffect(() => {
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", {
+        const config = {
             headers: {
-                "Authorization": "Bearer " + token
+                "Authorization": `Bearer ${token}`
             }
-        })
+        }
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
         request.then((res) => { setHabitsToday(res.data) })
-        request.catch((res) => { console.log(res.response.data) })
+        request.catch((res) => { alert("Token Inválido"); navigate("/")})
     }, [])
     
     
@@ -89,9 +92,9 @@ function doHabit(token, id, setHabitsToday, setDisable, setProgress, habitsToday
         }
     })
     promisse.then((res) => { setHabitsToday(res.data); attProgress(habitsToday,setProgress); setDisable(false)})
-    promisse.catch((res) => { console.log(res.response.data); setDisable(false)})
+    promisse.catch((res) => { alert(res.response.data.message); setDisable(false)})
 })
-    request.catch((res) => {alert(res.response.data); setDisable(false)})
+    request.catch((res) => {alert(res.response.data.message); setDisable(false)})
 }
 
 function notDoHabit(token, id, setHabitsToday, setDisable, setProgress, habitsToday) {
@@ -109,9 +112,9 @@ function notDoHabit(token, id, setHabitsToday, setDisable, setProgress, habitsTo
         }
     })
     promisse.then((res) => { setHabitsToday(res.data); attProgress(habitsToday,setProgress); setDisable(false)})
-    promisse.catch((res) => { console.log(res.response.data); setDisable(false)})
+    promisse.catch((res) => { alert(res.response.data.message); setDisable(false)})
 })
-    request.catch((res) => {alert(res.response.data); setDisable(false)})
+    request.catch((res) => {alert(res.response.data.message); setDisable(false)})
 }
 
 

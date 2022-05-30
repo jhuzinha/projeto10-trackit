@@ -77,7 +77,7 @@ function createHabit(config , nameHabit, selectedDay, setAllHabits, allHabits, s
         (res) => { setAllHabits([...allHabits, res.data]);
              setSelectedDay([]); setNameHabit("") })
     response.catch ( (res) =>
-        alert(res.response.data)
+        alert(res.response.data.message)
     )
 }
 
