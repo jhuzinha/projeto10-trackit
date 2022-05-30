@@ -20,17 +20,19 @@ export default function Today() {
     const { progress, setProgress } = useContext(Progressbar);
     const [habitsToday, setHabitsToday] = useState([]);
     const [disable, setDisable] = useState(false);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     attProgress(habitsToday,setProgress)
     useEffect(() => {
+
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
         }
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
-        request.then((res) => { setHabitsToday(res.data) })
+        request.then((res) => { setHabitsToday(res.data); setLoading(false)})
         request.catch((res) => { alert("Token Inválido"); navigate("/")})
     }, [])
     
@@ -48,7 +50,8 @@ export default function Today() {
                      progress === 0 ? <p> Nenhum hábito concluído ainda </p>  : <p><Span> {progress.toFixed(0)}% dos habitos concluidos</Span></p>  }
                 </MenuHoje>
                 {habitsToday.length === 0 ? 
-                    <ThreeDots color="#126BA5" height={80} width={80} /> 
+    
+                  loading ? <ThreeDots color="#126BA5" height={80} width={80} /> : <p>Você nao possui habitos para hoje, crie algum na sessao Habitos</p>
                     :
                     <div> {habitsToday.map((habit, index) => {
                         return (
@@ -119,17 +122,27 @@ function notDoHabit(token, id, setHabitsToday, setDisable, setProgress, habitsTo
 
 
 function attProgress(habitsToday,setProgress){
+    if (habitsToday.length !== 0) {
     let allIt = habitsToday.length;
     let doIt = habitsToday.filter((habit) => habit.done === true);
     let division = doIt.length / allIt  
     let total = division * 100
     setProgress(total)
+    }
+    else {
+        setProgress(0)
+    }
 }
 
 const Container = styled.div` 
     width: 100%;
     height: auto;
     padding: 0 17px 0 17px;
+    p {
+        font-size: 17.976px;
+        color: #666666;
+        margin-top: 8px;
+    }
 `
 const MenuHoje = styled.div`
     margin: 28px 0 28px 0;

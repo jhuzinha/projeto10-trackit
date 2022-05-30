@@ -89,7 +89,7 @@ function ExistHabits({ allHabits, token, setAllHabits }) {
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
     return (
         <>
-            {allHabits.map((habit) => {
+            {allHabits.map((habit, index) => {
                 return (
                     <>
                     
