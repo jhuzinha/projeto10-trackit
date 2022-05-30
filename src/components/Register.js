@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../Assets/images/Logo.png";
 import { ThreeDots } from  'react-loader-spinner';
+import { createGlobalStyle } from 'styled-components';
+
 
 export default function Register() {
     const [email, setEmail] = useState("");
@@ -39,6 +41,7 @@ export default function Register() {
 
     return (
         <>
+        <GlobalStyle />
             <Container>
                 <figure>
                     <img src={logo} alt="logo" />
@@ -58,7 +61,11 @@ export default function Register() {
     )
 }
 
-
+const GlobalStyle = createGlobalStyle`
+body {
+    background-color: white;
+}
+`
 
 const Container = styled.section`
     min-height: 100%;

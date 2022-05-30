@@ -56,7 +56,6 @@ table {
 
 body {
     font-family: 'Lexend Deca', sans-serif;
-    background-color: ${({login}) => login? "#FFFFFF" : "#F2F2F2"};
 }
 
 `

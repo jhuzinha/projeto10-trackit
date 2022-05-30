@@ -30,6 +30,25 @@ export default function ShowCard({setCard, setAllHabits, allHabits, nameHabit, s
 
     }
 
+
+    function submitData(){
+        if (selectedDay.length === 0) {
+            return(
+                alert("Selecione pelo menos 1 dia da semana")
+            )
+        }
+
+        if (nameHabit.length === 0 ) {
+            return(
+                alert("Digite o nome do habito")
+            )
+        }
+
+        createHabit(config , nameHabit, selectedDay, setAllHabits, allHabits, setSelectedDay, setNameHabit); 
+        setCard(false);
+
+    }
+
     return (
         <Card>
             <input placeholder="nome do hábito" type="text" name="nome" value={nameHabit} id="" onChange={(e) => setNameHabit(e.target.value)} required />
@@ -41,7 +60,7 @@ export default function ShowCard({setCard, setAllHabits, allHabits, nameHabit, s
             </ButtonsDays>
             <Confirm> 
                 <button onClick={() => setCard(false)}> Cancelar </button>
-                <button onClick={() => {createHabit(config , nameHabit, selectedDay, setAllHabits, allHabits, setSelectedDay, setNameHabit); setCard(false)}}> Salvar </button>
+                <button onClick={() => submitData()}> Salvar </button>
             </Confirm>
         </Card>
     )
@@ -61,6 +80,8 @@ function createHabit(config , nameHabit, selectedDay, setAllHabits, allHabits, s
         alert(res.response.data)
     )
 }
+
+
 
 const Card = styled.div`
     background: #FFFFFF;

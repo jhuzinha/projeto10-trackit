@@ -7,7 +7,7 @@ import Header from "./Header";
 import { BsTrash } from "@react-icons/all-files/bs/BsTrash";
 import Menu from "./Menu";
 import { ThreeDots } from  'react-loader-spinner';
-
+import { createGlobalStyle } from "styled-components";
 
 export default function Habits() {
     const [allHabits, setAllHabits] = useState([]);
@@ -88,7 +88,8 @@ function ExistHabits({ allHabits, token, setAllHabits }) {
         <>
             {allHabits.map((habit) => {
                 return (
-
+                    <>
+                    <GlobalStyle />
                     <CardHabit key={habit.id}>
                         <li>
                             <NameHabitCard>{habit.name}</NameHabitCard>
@@ -100,7 +101,7 @@ function ExistHabits({ allHabits, token, setAllHabits }) {
                             <DaySelect cor={'#666666'} background={"#ffffff"}  key={index}>{day}</DaySelect>) })}
                         </div>
                     </CardHabit>
-
+                    </>            
                 )
             })
             }
@@ -131,6 +132,12 @@ const CardHabit = styled.div`
         margin-bottom: 8px;
         word-wrap: break-word;
     }
+`
+
+const GlobalStyle = createGlobalStyle`
+body {
+    background-color:  #F2F2F2;
+}
 `
 
 const DaySelect = styled.button`

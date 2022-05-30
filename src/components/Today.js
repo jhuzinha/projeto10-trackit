@@ -9,6 +9,7 @@ import { useContext, useState, useEffect } from "react";
 import { BsCheckLg } from "react-icons/bs";
 import { ThreeDots } from 'react-loader-spinner';
 import Progressbar from "./contexts/ProgressBar";
+import { createGlobalStyle } from "styled-components";
 
 
 export default function Today() {
@@ -34,7 +35,7 @@ export default function Today() {
 
     return (
         <>
-
+            <GlobalStyle />
             <Header />
             <Container>
                 <MenuHoje>
@@ -55,12 +56,13 @@ export default function Today() {
                                    
                                     { (habit.currentSequence === habit.highestSequence && habit.highestSequence !== 0 ) ? <p> Seu recorde: <Span> {habit.highestSequence} {habit.currentSequence === 1 && habit.currentSequence === 0 ? "dia" : "dias" } </Span> </p> : <p> Seu recorde: {habit.highestSequence} {habit.currentSequence === 1 && habit.currentSequence === 0 ? "dia" : "dias" } </p> }
                                 </ul>
+                                
                                 {
                                     habit.done ?
-                                    <CheckCard background={"#8FC549"} onClick= {() => notDoHabit(token, habit.id, setHabitsToday, setDisable, setProgress, habitsToday) } disabled={disable} > <BsCheckLg size="2em" /> </CheckCard> : 
+                                    <CheckCard background={"#8FC549"} onClick= {() => notDoHabit(token, habit.id, setHabitsToday, setDisable, setProgress, habitsToday) } disabled={disable} > <BsCheckLg size="2em" />  </CheckCard> :
+
                                     <CheckCard background={"#EBEBEB"} onClick= {() => doHabit(token, habit.id, setHabitsToday, setDisable, setProgress, habitsToday)} disabled={disable} > <BsCheckLg size="2em" /> </CheckCard>
-                            
-                               }
+                                }
                             </CardToday>
                         )
 
@@ -74,6 +76,7 @@ export default function Today() {
 
 function doHabit(token, id, setHabitsToday, setDisable, setProgress, habitsToday) {
     setDisable(true)
+
     const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, [],{
         headers: {
             "Authorization": "Bearer " + token
@@ -93,6 +96,7 @@ function doHabit(token, id, setHabitsToday, setDisable, setProgress, habitsToday
 
 function notDoHabit(token, id, setHabitsToday, setDisable, setProgress, habitsToday) {
     setDisable(true)
+
     const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,[] ,{
         headers: {
             "Authorization": "Bearer " + token
@@ -142,6 +146,12 @@ const MenuHoje = styled.div`
 const Span = styled.span`
     color: #8FC549;
 
+`
+
+const GlobalStyle = createGlobalStyle`
+body {
+    background-color:  #F2F2F2;
+}
 `
 
 

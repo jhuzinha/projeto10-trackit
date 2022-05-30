@@ -7,6 +7,8 @@ import Token from "../components/contexts/Token";
 import logo from "../Assets/images/Logo.png"
 import UserImage from "./contexts/Image";
 import { ThreeDots } from  'react-loader-spinner';
+import { createGlobalStyle } from 'styled-components';
+
 
 
 export default function Login() {
@@ -46,6 +48,8 @@ export default function Login() {
     }
 
     return (
+        <>
+        <GlobalStyle/>
             <ContainerLogin>
                 <figure>
                     <img src={logo} alt="logo" />
@@ -57,8 +61,15 @@ export default function Login() {
                 </Forms>
                 <Link to="/cadastro"> <p>Não tem uma conta? Cadastre-se!</p> </Link>
             </ContainerLogin>
-    )
+   </> )
 }
+
+const GlobalStyle = createGlobalStyle`
+body {
+    background-color: white;
+}
+`
+
 
 const ContainerLogin = styled.section`
     min-height: 100%;

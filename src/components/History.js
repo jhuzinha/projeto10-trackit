@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import Menu from "./Menu";
 import Header from "./Header";
-
+import { createGlobalStyle } from "styled-components";
 
 export default function History() {
     return (
-        <>
+        <>  
+            <GlobalStyle />
             <Header />
             <Container>
                 <h1> Histórico </h1>
@@ -18,6 +19,12 @@ export default function History() {
 }
 
 
+
+const GlobalStyle = createGlobalStyle`
+body {
+    background-color:  #F2F2F2;
+}
+`
 const Container = styled.div`
     width: 100%;
     height: auto;
